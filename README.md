@@ -33,7 +33,7 @@ is generated and you have to install it on the phone again.
 - Three sounds (Click, Wood, Beep) and a volume control
 - Plays even with the ring/silent switch on (iOS 17+), keeps the screen awake while running
 - Settings are saved on the device
-- **Rhythms** tab: a rhythm guide with 14 food-word rhythms. Tap one to loop it at the
+- **Rhythms** tab: a rhythm guide with 18 food-word rhythms. Tap one to loop it at the
   current tempo, with the syllables and notes highlighted in time and an optional beat click.
   The rhythms are defined in the `RHYTHMS` table in `app.js` (durations in sixteenths)
   and the notation is drawn from that data, so adding a rhythm is one line.
@@ -43,7 +43,7 @@ is generated and you have to install it on the phone again.
   follow each other. It shows the pattern to play **now** (notes light up when to play them)
   and the **next** one. You only hear the beat click (accented on each new pattern) unless
   **Guide** is on. Options: repeat each pattern 1×/2×/4×/8×, and level (Easy = no sixteenths,
-  Medium = no runs of four sixteenths, All).
+  Medium = no runs of four sixteenths, dotted, syncopated or triplet rhythms, All).
   **Listen to my strumming** uses the microphone to time your strums against the notes and
   shows a live percentage (last 16 notes), how early or late each strum was, and a session score.
   **Timing** sets how strict: Strict (full marks within 20 ms of the note, none from 100 ms),
