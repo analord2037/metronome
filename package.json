@@ -1,0 +1,14 @@
+{
+  "name": "metronome",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline metronome and rhythm practice web app for iPhone.",
+  "scripts": {
+    "start": "node serve.mjs",
+    "icons": "python3 tools/make_icons.py public/icons",
+    "deploy": "git subtree push --prefix public origin gh-pages"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
