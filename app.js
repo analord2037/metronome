@@ -21,8 +21,10 @@ const MARKINGS = [
   [200, 'Presto'], [Infinity, 'Prestissimo'],
 ];
 
-// Rhythm guide. Durations are in sixteenth notes (4 = quarter, 2 = eighth, 1 = sixteenth).
-// A trailing "-" means the word continues in the next syllable.
+// Rhythm guide. Durations are in sixteenth notes (4 = quarter, 2 = eighth, 1 = sixteenth,
+// 4 / 3 = triplet eighth).
+// A trailing "-" means the word continues in the next syllable. `level: 2` (dotted,
+// syncopated or triplet) keeps a rhythm out of Practice's Easy and Medium levels.
 const RHYTHMS = [
   { name: 'Hot Dog', emoji: '🌭', notes: [[4, 'Hot'], [4, 'dog']] },
   { name: 'Grape Soda', emoji: '🥤', notes: [[4, 'Grape'], [2, 'so-'], [2, 'da']] },
@@ -38,6 +40,10 @@ const RHYTHMS = [
   { name: 'Strawberry Ice Cream', emoji: '🍦', notes: [[2, 'Straw-'], [1, 'ber-'], [1, 'ry'], [2, 'ice'], [2, 'cream']] },
   { name: 'Chips and Guacamole', emoji: '🥑', notes: [[2, 'Chips'], [2, 'and'], [1, 'gua-'], [1, 'ca-'], [1, 'mo-'], [1, 'le']] },
   { name: 'Pepperoni Pizza', emoji: '🍕', notes: [[1, 'Pep-'], [1, 'per-'], [1, 'o-'], [1, 'ni'], [2, 'piz-'], [2, 'za']] },
+  { name: 'Mac and Cheese', emoji: '🧀', level: 2, notes: [[3, 'Mac'], [1, 'and'], [4, 'cheese']] },
+  { name: 'Waffles and Jam', emoji: '🧇', level: 2, notes: [[1, 'Waf-'], [2, 'fles'], [1, 'and'], [4, 'jam']] },
+  { name: 'Bacon Bits', emoji: '🥓', level: 2, notes: [[1, 'Ba-'], [3, 'con'], [4, 'bits']] },
+  { name: 'Chocolate Cake', emoji: '🍫', level: 2, notes: [[4 / 3, 'Choc-'], [4 / 3, 'o-'], [4 / 3, 'late'], [4, 'cake']] },
 ];
 // One-beat food groups for the Scroll practice. Durations in ticks (12 per beat):
 // 12 = quarter, 6 = eighth, 3 = sixteenth, 9 = dotted eighth, 4 = triplet eighth.
@@ -57,7 +63,7 @@ const CELLS = [
 // Internally all durations are in ticks: 12 per beat, so sixteenths (3) and triplets (4) both fit.
 const TPB = 12;
 function prepRhythm(r, ticksPerUnit) {
-  r.notes = r.notes.map(([d, syl]) => [d * ticksPerUnit, syl]);
+  r.notes = r.notes.map(([d, syl]) => [Math.round(d * ticksPerUnit), syl]);
   let s = 0;
   r.starts = r.notes.map(([d]) => { const at = s; s += d; return at; });
   r.beats = s / TPB;
@@ -329,6 +335,7 @@ let practiceNext = [];
 function practicePool() {
   return RHYTHMS.map((r, i) => i).filter((i) => {
     const m = RHYTHMS[i].maxSixteenthRun;
+    if (RHYTHMS[i].level === 2 && state.practiceLevel !== 'all') return false;
     return state.practiceLevel === 'easy' ? m === 0 : state.practiceLevel === 'medium' ? m <= 2 : true;
   });
 }

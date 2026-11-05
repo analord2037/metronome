@@ -3,7 +3,7 @@
 // whenever the server is reachable (so updates arrive on the next launch).
 // Bump VERSION to force all clients to drop the old cache.
 
-const VERSION = 'v25';
+const VERSION = 'v27';
 const CACHE = `metronome-${VERSION}`;
 const ASSETS = [
   './',
